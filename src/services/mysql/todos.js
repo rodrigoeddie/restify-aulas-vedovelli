@@ -33,12 +33,12 @@ const todos = (deps) => {
         const { connection, errorHandler } = deps;
 
         connection.query('UPDATE todo SET name = ? WHERE id = ?', [name, id], (error, results) => {
-          if (error) {
+          if (error || !results.affectedRows) {
             errorHandler(error, `falha ao atualizar o todo ${name}`, reject);
             return false;
           }
 
-          resolve({ todo: { name } });
+          resolve({ todo: { name, id } });
         });
       });
     },
@@ -47,7 +47,7 @@ const todos = (deps) => {
         const { connection, errorHandler } = deps;
 
         connection.query('DELETE from todo WHERE id = ?', [id], (error, results) => {
-          if (error) {
+          if (error || !results.affectedRows) {
             errorHandler(error, `falha ao remover o todo de id: ${id}`, reject);
             return false;
           }

@@ -7,9 +7,11 @@
     "dev": "nodemon src/index.js"
   },
   "dependencies": {
+    "npm": "^6.1.0",
     "restify": "^7.2.1"
   },
   "devDependencies": {
+    "dotenv": "^6.0.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.12.0",
