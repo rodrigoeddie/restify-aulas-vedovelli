@@ -1,0 +1,20 @@
+node_modules
+.tmp
+gulpfile.js
+server/log/*
+build/server/log/*
+
+# build
+_AUX/*
+!.gitkeep
+**/*.map
+build/server/log/*
+
+# OSX Files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows image file caches
+Thumbs.db
