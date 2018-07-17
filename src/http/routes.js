@@ -1,19 +1,20 @@
-const db = require('../services/mysql');
+const db      = require('../services/mysql');
+const restify = require('restify');
 
 const routes = (server) => {
-  server.get('/', (req, res, next) => {
-    res.send('home');
-    next();
-  });
+  server.get('/*', restify.plugins.serveStatic({
+    directory: __dirname + '/../public',
+    default: 'index.html',
+  }));
 
-  server.get('/todo', (req, res, next) => {
+  server.get('/api/todo', (req, res, next) => {
     db.todos().all().then((todos) => {
       res.send(todos);
       next();
     });
   });
 
-  server.post('/todo', (req, res, next) => {
+  server.post('/api/todo', (req, res, next) => {
     const { name } = req.params;
 
     db.todos().save(name).then((todo) => {
@@ -22,7 +23,7 @@ const routes = (server) => {
     });
   });
 
-  server.put('/todo', (req, res, next) => {
+  server.put('/api/todo', (req, res, next) => {
     const { id, name } = req.params;
 
     db.todos().update(id, name).then((todo) => {
@@ -31,7 +32,7 @@ const routes = (server) => {
     });
   });
 
-  server.del('/todo', (req, res, next) => {
+  server.del('/api/todo', (req, res, next) => {
     const { id } = req.params;
 
     db.todos().del(id).then((todo) => {
