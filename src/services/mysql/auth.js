@@ -11,6 +11,7 @@ const auth = (deps) => {
         const queryData = [email, sha1(password)];
 
         connection.query(queryString, queryData, (error, results) => {
+
           if (error || !results.length) {
             errorHandler(error, 'Falha ao localizar o usuário', reject);
             return false;
