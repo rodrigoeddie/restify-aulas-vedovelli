@@ -16,7 +16,11 @@ const errorHandler = (error, msg, rejectFunction) => {
 }
 
 const todosModule = require('./todos')({ connection, errorHandler });
+const usersModule = require('./users')({ connection, errorHandler });
+const authModule = require('./auth')({ connection, errorHandler });
 
 module.exports = {
-  todos: () => todosModule
+  todos: () => todosModule,
+  users: () => usersModule,
+  auth: () => authModule,
 };

@@ -1,45 +1,30 @@
-const db      = require('../services/mysql');
+const todo = require('./modules/todo');
+const users = require('./modules/users');
+
 const restify = require('restify');
+const path = require('path');
+const db = require('../services/mysql');
 
 const routes = (server) => {
+
+  todo(server);
+  users(server);
+
+  server.post('/autenticacao', async (req, res, next) => {
+    try {
+      const { email, password } = req.body
+      res.send(await db.auth().authenticate(email, password))
+    } catch (error) {
+      res.send(422, error)
+    }
+    next()
+  })
+
   server.get('/*', restify.plugins.serveStatic({
-    directory: __dirname + '/../public',
+    directory: path.resolve(__dirname, '../public'),
     default: 'index.html',
   }));
 
-  server.get('/api/todo', (req, res, next) => {
-    db.todos().all().then((todos) => {
-      res.send(todos);
-      next();
-    });
-  });
-
-  server.post('/api/todo', (req, res, next) => {
-    const { name } = req.params;
-
-    db.todos().save(name).then((todo) => {
-      res.send(todo);
-      next();
-    });
-  });
-
-  server.put('/api/todo', (req, res, next) => {
-    const { id, name } = req.params;
-
-    db.todos().update(id, name).then((todo) => {
-      res.send(todo);
-      next();
-    });
-  });
-
-  server.del('/api/todo', (req, res, next) => {
-    const { id } = req.params;
-
-    db.todos().del(id).then((todo) => {
-      res.send(todo);
-      next();
-    });
-  });
 };
 
 module.exports = routes;
