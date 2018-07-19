@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const jwtMiddleware = (deps) => {
   return async (req, res, next) => {
-    if (req.href().includes('/api/')) {
+    if (req.href().includes('/api____/')) {
       const token = req.headers['x-access-token'];
 
       if (!token) {
