@@ -2,9 +2,9 @@
   <div class="todo">
     <div class="md-layout md-alignment-center">
       <div class="md-layout-item md-size-50 md-small-size-100">
-        <todo-form @taskInputed="newTask($event)"></todo-form>
+        <todo-form @taskInputed="newTask"></todo-form>
         <br>
-        <todo-list :todos="todos" @taskDeleted="deleteTask($event)"></todo-list>
+        <todo-list :todos="todos" @taskDeleted="deleteTask"></todo-list>
       </div>
     </div>
   </div>
@@ -22,7 +22,7 @@ export default {
     'todo-list': todoList,
   },
   data: () => ({
-      todos: [],
+      todos: '',
       errors: []
   }),
   methods: {

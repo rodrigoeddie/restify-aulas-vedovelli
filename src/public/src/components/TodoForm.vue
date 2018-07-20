@@ -5,9 +5,11 @@
           <md-card-content>
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
-                <md-field>
+                <md-field :class="{ 'form-group--error': $v.todo.$error }">
                   <label for="todo">Adicione uma tarefa</label>
-                  <md-input v-model="todo" @keyup.enter.native="newTask"></md-input>
+                  <md-input v-model="todo" @keyup.enter="newTask"></md-input>
+                  <div class="error" v-if="!$v.todo.required">Informe uma tarefa.</div>
+                  <div class="error" v-if="!$v.todo.minLength">É necessário {{$v.todo.$params.minLength.min}} caracteres.</div>
                 </md-field>
               </div>
               <md-snackbar :md-active.sync="taskSaved">Tarefa cadastrada com sucesso!</md-snackbar>
@@ -42,8 +44,12 @@ export default {
   },
   methods: {
     newTask () {
-      this.$emit('taskInputed', this.todo);
-      this.todo = '';
+      this.$v.$touch();
+
+      if (!this.$v.$invalid) {
+        this.$emit('taskInputed', this.todo);
+        this.todo = '';
+      }
     },
   },
 }
