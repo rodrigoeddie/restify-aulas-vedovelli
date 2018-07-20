@@ -11,6 +11,7 @@ import 'vue-material/dist/theme/default.css'
 Vue.use(VueMaterial);
 Vue.config.productionTip = false;
 
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
