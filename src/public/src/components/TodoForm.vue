@@ -12,7 +12,6 @@
                   <div class="error" v-if="!$v.todo.minLength">É necessário {{$v.todo.$params.minLength.min}} caracteres.</div>
                 </md-field>
               </div>
-              <md-snackbar :md-active.sync="taskSaved">Tarefa cadastrada com sucesso!</md-snackbar>
             </div>
           </md-card-content>
         </md-card>
@@ -34,7 +33,6 @@ export default {
   mixins: [validationMixin],
   data: () => ({
       todo: '',
-      taskSaved: false,
   }),
   validations: {
     todo: {

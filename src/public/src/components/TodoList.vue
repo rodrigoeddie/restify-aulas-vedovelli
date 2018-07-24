@@ -15,9 +15,13 @@
       </div>
       </md-table-toolbar>
 
-      <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="multiple" md-auto-select>
+      <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="multiple"> <!-- md-auto-select -->
       <md-table-cell md-label="id" md-sort-by="id">{{ item.id }}</md-table-cell>
-      <md-table-cell md-label="name" md-sort-by="name">{{ item.name }}</md-table-cell>
+      <md-table-cell md-label="name" md-sort-by="name">
+        <md-field>
+          <md-input :value="item.name" :rel="item.id" @keyup.enter="editTask"></md-input>
+        </md-field>
+      </md-table-cell>
       <md-table-cell>
           <md-button class="md-icon-button md-raised md-accent" @click="deleteTask(item.id)">
           <md-icon>delete_forever</md-icon>
@@ -42,6 +46,10 @@ export default {
       id: '',
   }),
   methods: {
+    editTask (event) {
+        this.$emit('taskEdited', {name: event.target.value, id: event.target.attributes.rel.value});
+        // this.todo = '';
+    },
     onSelect (items) {
       this.selected = items;
     },

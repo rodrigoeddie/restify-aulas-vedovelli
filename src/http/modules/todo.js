@@ -18,7 +18,7 @@ module.exports = function todo(server) {
   });
 
   server.put('/api/todo', (req, res, next) => {
-    const { id, name } = req.body;
+    const { id, name } = req.body.data;
 
     db.todos().update(id, name).then((todo) => {
       res.send(todo);
